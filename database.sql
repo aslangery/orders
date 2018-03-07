@@ -34,5 +34,25 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS changeState;
 CREATE PROCEDURE changeState(IN oid INT, IN newstate INT)
   BEGIN
-    UPDATE orders SET orders.state=newstate WHERE orders.id=oid;
+    UPDATE orders SET orders.state=newstate, orders.paid = NOW() WHERE orders.id=oid;
+  END //
+
+DROP PROCEDURE IF EXISTS getOrder;
+CREATE PROCEDURE getOrder (IN oid INT)
+  BEGIN
+    DECLARE id INT;
+    DECLARE username VARCHAR(100);
+    DECLARE nomer INT;
+    DECLARE amount DECIMAL(8,2);
+    DECLARE paid DATETIME;
+    DECLARE created DATETIME;
+    DECLARE state DATETIME;
+    SELECT o.id, u.email, o.nomer, o.amount,
+      o.paid, o.created, s.state
+    INTO id, username, nomer, amount, paid, created, state
+    FROM orders AS o
+      LEFT JOIN users AS u ON u.id=o.user
+      LEFT JOIN states AS s ON s.id=o.state
+    WHERE o.id=oid;
+    SELECT id, username, nomer, amount, paid, created, state;
   END //

@@ -8,11 +8,22 @@
 
 namespace Controllers;
 
+use Models\Order;
 
 class OrderController
 {
 	public function orderList(\App $app)
 	{
+		$order=new Order();
+		$orders['list']=$order->getList();
+		return $orders;
+	}
 
+	public function changeState(\App $app)
+	{
+		$order= new Order($app->request->post['id']);
+		$order->changeState($app->request->post['state']);
+		$host = $_SERVER['HTTP_HOST'];
+		header('Location: http://' . $host . '/index.php?view=list&task=order.orderlist');
 	}
 }

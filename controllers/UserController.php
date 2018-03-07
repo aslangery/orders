@@ -36,7 +36,7 @@ class UserController
 		            if ($session->save())
 		            {
 			            $host = $_SERVER['HTTP_HOST'];
-			            header('Location: http://' . $host . '/index.php?view=account&task=expence.listing');
+			            header('Location: http://' . $host . '/index.php?view=list&task=order.orderlist');
 		            }
 	            }
             }

@@ -8,7 +8,7 @@
 session_start();
 session_write_close();
 define('APP',1);
-define('DSN','mysql:dbname=bit;host=127.0.0.1');
+define('DSN','mysql:dbname=orders;host=127.0.0.1');
 define('USER', 'root');
 define('PASS', 'root');
 spl_autoload_register(function ($class) {

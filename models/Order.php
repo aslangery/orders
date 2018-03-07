@@ -27,9 +27,35 @@ class Order extends Model
 
 	public $state='';
 
-	public function delete()
+	public function __construct($id=0)
 	{
-
+		if($id!=0)
+		{
+			if($res=$this->getOrder()!==null)
+			{
+				$this->id=$res['id'];
+				$this->user=$res['user'];
+				$this->nomer=$res['nomer'];
+				$this->amount=$res['amount'];
+				$this->paid=$res['paid'];
+				$this->created=$res['created'];
+				$this->state=$res['state'];
+			}
+		}
+	}
+	protected function getOrder($id)
+	{
+		$query='CALL getOrder(:id)';
+		$this->statement=$this->pdo->prepare($query);
+		$this->statement->bindParam(':id', $id, \PDO::PARAM_INT|\PDO::PARAM_INPUT_OUTPUT );
+		if($this->statement->execute())
+		{
+			$result=$this->statement->fetchAll( \PDO::FETCH_ASSOC);
+			$this->statement=null;
+			return $result;
+		}
+		$this->statement=null;
+		return null;
 	}
 
 	public function changeState($newState)
