@@ -29,6 +29,7 @@ class Order extends Model
 
 	public function __construct($id=0)
 	{
+		parent::__construct();
 		if($id!=0)
 		{
 			if($res=$this->getOrder()!==null)

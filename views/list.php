@@ -42,10 +42,4 @@ if(!defined('APP')) die();
     </tr>
     <?php }?>
 </table>
-<script type="text/javascript">
-function changeState(id, state)
-{
-    $("#list").load("index.php?task=order.changeState", {'id': id, 'state':state});
-}
-</script>
 
