@@ -23,7 +23,13 @@ class App
     public function __construct()
     {
         $this->request=new \Request();
-        $this->view=$this->getView('main');
+        $layout=$this->request->get['layout'];
+        if($layout==null){
+	        $this->view=$this->getView('main');
+        }else{
+	        $this->view=$this->getView($layout);
+        }
+
     }
 
     /**

@@ -24,16 +24,21 @@ class Request
 			                       'flags'     => FILTER_FLAG_ENCODE_LOW|FILTER_FLAG_ENCODE_HIGH,
 			),
 			'cost'=>FILTER_VALIDATE_FLOAT,
+			'id'=>FILTER_VALIDATE_INT,
+			'state'=>FILTER_VALIDATE_INT,
 			'e-mail'=>FILTER_VALIDATE_EMAIL,
 			'view'    => array('filter'    => FILTER_SANITIZE_STRING,
+			                   'flags'     => FILTER_FLAG_ENCODE_LOW|FILTER_FLAG_ENCODE_HIGH,
+			),
+			'layout'    => array('filter'    => FILTER_SANITIZE_STRING,
 			                   'flags'     => FILTER_FLAG_ENCODE_LOW|FILTER_FLAG_ENCODE_HIGH,
 			),
 			'task'    => array('filter'    => FILTER_SANITIZE_STRING,
 			                   'flags'     => FILTER_FLAG_ENCODE_LOW|FILTER_FLAG_ENCODE_HIGH,
 			),
 		);
-		$this->get=filter_input_array(INPUT_GET,$args,TRUE);
-		$this->post=filter_input_array(INPUT_POST,$args,TRUE);
-		$this->cookie=filter_input_array(INPUT_COOKIE,$args,TRUE);
+		$this->get=filter_input_array(INPUT_GET, $args,TRUE);
+		$this->post=filter_input_array(INPUT_POST, $args,TRUE);
+		$this->cookie=filter_input_array(INPUT_COOKIE, $args,TRUE);
 	}
 }

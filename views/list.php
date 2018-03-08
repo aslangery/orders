@@ -19,13 +19,12 @@ if(!defined('APP')) die();
         <th>State</th>
         <th></th>
     </tr>
-
     <?php
-
-    foreach ($vars['list'] as $order){    ?>
+    foreach ($vars['list'] as $order){
+        if ($order->state_id!=4) {?>
     <tr>
         <td><?php echo $order->id;?></td>
-        <td><?php echo $order->user;?></td>
+        <td><?php echo $order->email;?></td>
         <td><?php echo $order->nomer;?></td>
         <td><?php echo $order->amount;?></td>
         <td><?php echo $order->paid;?></td>
@@ -37,9 +36,9 @@ if(!defined('APP')) die();
             ?>
             <button onclick="changeState(<?php echo $order->id.', 2'?>)">Change State</button>
                 <?php }?>
-            <button>Delete</button>
+            <button onclick="changeState(<?php echo $order->id.', 4'?>)">Delete</button>
         </td>
     </tr>
-    <?php }?>
+    <?php }}?>
 </table>
 

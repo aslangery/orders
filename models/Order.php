@@ -32,10 +32,11 @@ class Order extends Model
 		parent::__construct();
 		if($id!=0)
 		{
-			if($res=$this->getOrder()!==null)
+			$res=$this->getOrder($id);
+			if($res!==null)
 			{
 				$this->id=$res['id'];
-				$this->user=$res['user'];
+				$this->user=$res['username'];
 				$this->nomer=$res['nomer'];
 				$this->amount=$res['amount'];
 				$this->paid=$res['paid'];
@@ -46,12 +47,12 @@ class Order extends Model
 	}
 	protected function getOrder($id)
 	{
-		$query='CALL getOrder(:id)';
+		$query='CALL getOrder(:oid)';
 		$this->statement=$this->pdo->prepare($query);
-		$this->statement->bindParam(':id', $id, \PDO::PARAM_INT|\PDO::PARAM_INPUT_OUTPUT );
+		$this->statement->bindParam(':oid', $id, \PDO::PARAM_INT );
 		if($this->statement->execute())
 		{
-			$result=$this->statement->fetchAll( \PDO::FETCH_ASSOC);
+			$result=$this->statement->fetch( \PDO::FETCH_ASSOC);
 			$this->statement=null;
 			return $result;
 		}
@@ -63,12 +64,12 @@ class Order extends Model
 	{
 		$query='CALL changeState(:oid, :state)';
 		$this->statement=$this->pdo->prepare($query);
-		$this->statement->bindParam(':oid', $this->id, \PDO::PARAM_INT);
-		$this->statement->bindParam(':state', $newState, \PDO::PARAM_INT);
+		$this->statement->bindValue(':oid', $this->id, \PDO::PARAM_INT);
+		$this->statement->bindValue(':state', $newState, \PDO::PARAM_INT);
 		if ($this->statement->execute())
 		{
 			$this->statement=null;
-			return true;
+			return $this->getOrder($this->id);
 		}
 		$this->statement=null;
 		return false;

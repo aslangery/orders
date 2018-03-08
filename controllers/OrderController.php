@@ -22,8 +22,10 @@ class OrderController
 	public function changeState(\App $app)
 	{
 		$order= new Order($app->request->post['id']);
-		$order->changeState($app->request->post['state']);
-		$host = $_SERVER['HTTP_HOST'];
-		header('Location: http://' . $host . '/index.php?view=list&task=order.orderlist');
+		if ($order->changeState($app->request->post['state']))
+		{
+			$host = $_SERVER['HTTP_HOST'];
+			header('Location: http://' . $host . '/index.php?view=list&task=order.orderlist&layout=component');
+		}
 	}
 }
